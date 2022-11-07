@@ -5,7 +5,8 @@ from ..__main__ import nuvola
 from ..Utils.globals import PREFIX
 from pyrogram import filters, enums
 from pyrogram.types import Message
-
+from pyrogram.errors import UsernameNotOccupied
+import asyncio
 
 # Add ID to commands list
 Nuvola.update_commands(nuvola, "ID", {
@@ -20,10 +21,16 @@ Nuvola.update_commands(nuvola, "ID", {
 async def id(client: Nuvola, message: Message):
     # Check wheter an an argument is present in the command or not
     if (len(message.command) == 2):
-        # If yes, get user/chat from argument
-        chat_to_get = message.command[1]
-        chat = await client.get_chat(chat_to_get)
-        await message.edit_text(f"{chat.id}")
+        # If yes, try to get user/chat from argument
+        try:
+            chat_to_get = message.command[1]
+            chat = await client.get_chat(chat_to_get)
+            await message.edit_text(f"{chat.id}")
+        # Exception: the username isn't occupied by anyone
+        except UsernameNotOccupied:
+            await message.edit_text("⚠️ Invalid username.")
+            await asyncio.sleep(2)
+            await message.delete()
     # If not, check if reply
     else:
         reply = message.reply_to_message
