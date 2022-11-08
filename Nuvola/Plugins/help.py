@@ -1,6 +1,6 @@
-# Import Class
+# Nuvola main class
 from ..nuvola import Nuvola
-# Import Nuvola instance
+# Nuvola istance
 from ..__main__ import nuvola
 from ..Utils.globals import PREFIX
 from pyrogram import filters
@@ -17,7 +17,7 @@ Nuvola.update_commands(nuvola, "HELP", {
 
 
 @Nuvola.on_message(filters.me & filters.command("help", PREFIX))
-async def help(client: Nuvola, message: Message):
+async def help(_, message: Message):
     # Initialize help_message string
     help_message = "⛅️ Help\n\n"
     # Just come variables to change the appearance of help_message
