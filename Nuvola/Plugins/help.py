@@ -30,8 +30,8 @@ async def help(_, message: Message):
     # Get all commands from commands list
     commands = Nuvola.get_commands(nuvola)
     for command in commands:
-        n += 1 if n != 3 else 1
+        n += 1 if n != 3 else -2
         # Concatenate all commands to help_message in a readable way
-        help_message += f"{emojis[str(n)]} <b>cmd »</b> {commands[command]['name']}\n<b>• usage »</b> <code>{commands[command]['usage']}</code>\n<b>• category »</b> {commands[command]['category']}\n<b>• description »</b> {commands[command]['description']}\n\n"
+        help_message += f"{emojis[str(n)]} <b>{commands[command]['name']}</b>\n<b>• usage »</b> <code>{commands[command]['usage']}</code>\n<b>• category »</b> {commands[command]['category']}\n<b>• description »</b> {commands[command]['description']}\n\n"
 
     await message.edit_text(help_message)
