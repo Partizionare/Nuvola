@@ -1,59 +1,81 @@
-# Import Class
+# Nuvola main class
 from ..nuvola import Nuvola
-# Import Nuvola instance
+# Nuvola istance
 from ..__main__ import nuvola
 from ..Utils.globals import PREFIX
-from pyrogram import filters, enums
+from pyrogram import filters
 from pyrogram.types import Message
-import asyncio
+from os import path
+import json
 
-global mutedList
-# creation of a list, in where all muted users IDs will put
-mutedList = []
+# Path to Nuvola/Utils/Json/plugins.json
+path_to_file = f"{path.dirname(path.dirname(__file__))}/Utils/Json/plugins.json"
 
-# function to mute an user in private chat, Nuvola will instantly delete the incoming messages of the muted user
-@Nuvola.on_message(filters.private & filters.me & filters.command("mute", PREFIX))
-async def mute(client: Nuvola, message: Message):
-	# globalizing to make things easier
-	global reply
-	reply = message.reply_to_message
-	if reply:
-		if not message.reply_to_message.from_user.id in mutedList:
-			# if the id of the user you reply to is not in list, it will be added
-			mutedList.append(reply.from_user.id)
-			await message.edit_text(f"@{reply.from_user.username} __muted__. O_o")
-		else:
-			# if is already on list, it means that the user is already muted
-			await message.edit_text(f"@{reply.from_user.username} is __already muted__.")
-	else:
-		p = await client.get_users(message.chat.id)
-		mutedList.append(message.chat.id)
-		await message.edit_text(f"@{p.username} muted. O_o")
-	 
-# function to unmute an user in private chat, Nuvola will not delete his messages anymore
-@Nuvola.on_message(filters.private & filters.me & filters.command("unmute", PREFIX))
-async def unmute(client: Nuvola, message: Message):
-	if message.reply_to_message:
-		if message.reply_to_message.from_user.id in mutedList:
-			# if the ID of the user you reply to is in the list, means that is muted, then will be unmute
-			mutedList.remove(reply.from_user.id)
-			await message.edit_text(f"@{reply.from_user.username} __unmuted__. ≧◡≦")
-		else:
-			# if the ID of the user you reply to isn't in the list, means that isn't muted
-			await message.edit_text(f"{reply.from_user.username} __isn't muted__.")
-	else:
-		mutedList.remove(message.chat.id)
-		p = await client.get_users(message.chat.id)
-		await message.edit_text(f"@{p.username} unmuted. ⊙_☉")
+# Open the file and load the content of it in json_data
+with open(path_to_file, "r") as file:
+    json_data = json.load(file)
 
-# function to detect incoming messages of the muted IDs
-@Nuvola.on_message(filters.incoming)
-async def mute_action(client: Nuvola, message: Message):
-	if message.from_user.id in mutedList:
-		# if the ID of the user who send a message is in the list, message will be instantly delete
-		await message.delete(revoke= True)
-	else:
-		pass
+# List where the bots stores ids of muted user
+muted_list = json_data["mute"]["muted"]
+
+# Add MUTE to commands list
+Nuvola.update_commands(nuvola, "MUTE", {
+    'name': 'mute',
+    'usage': '.mute',
+    'description': 'This command will mute the user (private chat).',
+    'category': 'Utilities'
+})
 
 
+@Nuvola.on_message(filters.me & filters.private & filters.command("mute", PREFIX))
+async def mute(_, message: Message):
+    # Get user
+    user = message.chat
+    #  If user isn't muted, mute him
+    if user.id not in muted_list:
+        muted_list.append(user.id)
+        await message.edit_text(f"@{user.username} muted.")
+        # Open the file and update the list of muted users
+        with open(path_to_file, "w") as file:
+            json.dump(json_data, file, indent=4)
+    else:
+        await message.edit_text(f"@{user.username} is already muted.")
 
+
+# Add UNMUTE to commands list
+Nuvola.update_commands(nuvola, "UNMUTE", {
+    'name': 'unmute',
+    'usage': '.unmute',
+    'description': 'This command will unmute the user (private chat).',
+    'category': 'Utilities'
+})
+
+
+@Nuvola.on_message(filters.me & filters.private & filters.command("unmute", PREFIX))
+async def unmute(_, message: Message):
+    # Get user
+    user = message.chat
+    # If the user is muted, unmute him
+    if user.id in muted_list:
+        muted_list.remove(user.id)
+        await message.edit_text(f"@{user.username} unmuted.")
+        # Open the file and update the list of muted users
+        with open(path_to_file, "w") as file:
+            json.dump(json_data, file, indent=4)
+    else:
+        await message.edit_text(f"@{user.username} isn't muted.")
+
+
+# Checks if the user is muted or not
+def muted(_, __, message: Message):
+    return message.from_user.id in muted_list
+
+
+# is_muted_filter declaration, if you don't understand what's going on here check https://docs.pyrogram.org/topics/create-filters
+is_muted_filter = filters.create(muted)
+
+
+# Delete all messages sent by muted users
+@Nuvola.on_message(filters.incoming & is_muted_filter)
+async def mute_action(_, message: Message):
+    await message.delete(revoke=True)
