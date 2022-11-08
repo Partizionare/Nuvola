@@ -1,6 +1,6 @@
-# Import Class
+# Nuvola main class
 from ..nuvola import Nuvola
-# Import Nuvola instance
+# Nuvola istance
 from ..__main__ import nuvola
 from ..Utils.globals import PREFIX
 from pyrogram import filters, enums
