@@ -25,7 +25,7 @@ async def id(client: Nuvola, message: Message):
         try:
             chat_to_get = message.command[1]
             chat = await client.get_chat(chat_to_get)
-            await message.edit_text(f"{chat.id}")
+            await message.edit_text(f"@{chat.username} ➛ {chat.id}")
         # Exception: the username isn't occupied by anyone
         except UsernameNotOccupied:
             await message.edit_text("⚠️ Invalid username.")
@@ -38,7 +38,7 @@ async def id(client: Nuvola, message: Message):
         if (reply):
             # If yes, get reply user
             user = await client.get_users(reply.from_user.id)
-            await message.edit_text(f"{user.id}")
+            await message.edit_text(f"@{reply.from_user.username} ➛ {user.id}")
         # If not, checks chat_type
         else:
             chat_type = message.chat.type
@@ -46,8 +46,8 @@ async def id(client: Nuvola, message: Message):
             if ((chat_type == enums.ChatType.PRIVATE) | (chat_type == enums.ChatType.BOT)):
                 # If yes, send the userbot id
                 user = await client.get_users("me")
-                await message.edit_text(f"{user.id}")
+                await message.edit_text(f"@{user.username} ➛ {user.id}")
             else:
                 # If not, send the chat id
                 chat_id = message.chat.id
-                await message.edit_text(f"{chat_id}")
+                await message.edit_text(f"{chat_id.title} ➛ {chat_id}")
