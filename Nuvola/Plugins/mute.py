@@ -1,6 +1,6 @@
 # Nuvola main class
 from ..nuvola import Nuvola
-# Nuvola istance
+# Nuvola instance
 from ..__main__ import nuvola
 from ..Utils.globals import PREFIX
 from pyrogram import filters
@@ -28,7 +28,7 @@ Nuvola.update_commands(nuvola, "MUTE", {
 
 
 @Nuvola.on_message(filters.me & filters.private & filters.command("mute", PREFIX))
-async def mute(_, message: Message):
+async def mute_cmd(_, message: Message):
     # Get user
     user = message.chat
     #  If user isn't muted, mute him
@@ -52,7 +52,7 @@ Nuvola.update_commands(nuvola, "UNMUTE", {
 
 
 @Nuvola.on_message(filters.me & filters.private & filters.command("unmute", PREFIX))
-async def unmute(_, message: Message):
+async def unmute_cmd(_, message: Message):
     # Get user
     user = message.chat
     # If the user is muted, unmute him
