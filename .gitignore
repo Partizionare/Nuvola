@@ -2,6 +2,7 @@
 *.session
 *.session-journal
 Nuvola/Utils/config.py
+Nuvola/Utils/Json/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
