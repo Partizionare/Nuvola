@@ -17,6 +17,7 @@ Nuvola.update_commands(nuvola, "INFO", {
 
 
 # Info command
-@Nuvola.on_message(filters.me & filters.command("info", PREFIX))
-async def info_cmd(_, message: Message):
-    await message.edit_text(f"⛅️ <b>Nuvola {__version__}</b>\n\nDeveloped <b>with ❤️ by:</b>\n\n• @Partizionare\n• @lajla\n\n🔗 <a href='https://github.com/Partizionare/Nuvola'>GitHub</a>", disable_web_page_preview=True)
+@Nuvola.on_message(filters.command("info", PREFIX))
+async def info(client: Nuvola, message: Message):
+    await message.delete()
+    await client.send_photo(message.chat.id, "https://ibb.co/C2617yS", f"**Nuvola** {__version__} ⛅️\n\nDeveloped **with ❤️ by:**\n\n• @Partizionare\n• @lajla\n\n**Language:** ➺ Python\n\n**Framework**: ➺ Pyrogram\n\n🔗 <a href='https://github.com/Partizionare/Nuvola'>GitHub</a>")
