@@ -1,6 +1,6 @@
-# Import Class
+# Nuvola main class
 from ..nuvola import Nuvola
-# Import Nuvola instance
+# Nuvola istance
 from ..__main__ import nuvola
 from ..Utils.globals import PREFIX
 from pyrogram import filters
@@ -17,7 +17,7 @@ Nuvola.update_commands(nuvola, "HELP", {
 
 
 @Nuvola.on_message(filters.me & filters.command("help", PREFIX))
-async def help(client: Nuvola, message: Message):
+async def help_cmd(_, message: Message):
     # Initialize help_message string
     help_message = "⛅️ Help\n\n"
     # Just come variables to change the appearance of help_message
@@ -30,8 +30,8 @@ async def help(client: Nuvola, message: Message):
     # Get all commands from commands list
     commands = Nuvola.get_commands(nuvola)
     for command in commands:
-        n += 1 if n != 3 else 1
+        n += 1 if n != 3 else -2
         # Concatenate all commands to help_message in a readable way
-        help_message += f"{emojis[str(n)]} <b>cmd »</b> {commands[command]['name']}\n<b>• usage »</b> <code>{commands[command]['usage']}</code>\n<b>• category »</b> {commands[command]['category']}\n<b>• description »</b> {commands[command]['description']}\n\n"
+        help_message += f"{emojis[str(n)]} <b>{commands[command]['name']}</b>\n<b>• usage »</b> <code>{commands[command]['usage']}</code>\n<b>• category »</b> {commands[command]['category']}\n<b>• description »</b> {commands[command]['description']}\n\n"
 
     await message.edit_text(help_message)

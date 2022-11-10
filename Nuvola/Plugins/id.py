@@ -1,6 +1,6 @@
-# Import Class
+# Nuvola main class
 from ..nuvola import Nuvola
-# Import Nuvola instance
+# Nuvola instance
 from ..__main__ import nuvola
 from ..Utils.globals import PREFIX
 from pyrogram import filters, enums
@@ -18,7 +18,7 @@ Nuvola.update_commands(nuvola, "ID", {
 
 
 @Nuvola.on_message(filters.me & filters.command("id", PREFIX))
-async def id(client: Nuvola, message: Message):
+async def id_cmd(client: Nuvola, message: Message):
     # Check wheter an an argument is present in the command or not
     if (len(message.command) == 2):
         # If yes, try to get user/chat from argument
