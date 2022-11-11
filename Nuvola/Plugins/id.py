@@ -2,13 +2,14 @@
 from ..nuvola import Nuvola
 # Nuvola instance
 from ..__main__ import nuvola
-from ..Utils.globals import PREFIX
-from pyrogram import filters, enums
+from ..Utils.globals import *
+from pyrogram import filters
 from pyrogram.types import Message
-from pyrogram.errors import UsernameNotOccupied
+from pyrogram.errors import UsernameNotOccupied, PeerIdInvalid
 import asyncio
 
-# Add ID to commands list
+
+# Add Id to commands list
 Nuvola.update_commands(nuvola, "ID", {
     'name': 'id',
     'usage': '.id opt(&ltusername&gt)',
@@ -17,37 +18,39 @@ Nuvola.update_commands(nuvola, "ID", {
 })
 
 
+# Id command
 @Nuvola.on_message(filters.me & filters.command("id", PREFIX))
 async def id_cmd(client: Nuvola, message: Message):
-    # Check wheter an an argument is present in the command or not
-    if (len(message.command) == 2):
-        # If yes, try to get user/chat from argument
-        try:
+    # Initializing chat_to_get and chat
+    chat_to_get, chat = None, None
+    try:
+        # Check whether an argument is provided or not
+        if (len(message.command) == 2):
+            # If yes, the script will get chat info based on that arg
             chat_to_get = message.command[1]
-            chat = await client.get_chat(chat_to_get)
-            await message.edit_text(f"@{chat.username} ➛ {chat.id}")
-        # Exception: the username isn't occupied by anyone
-        except UsernameNotOccupied:
-            await message.edit_text("⚠️ Invalid username.")
-            await asyncio.sleep(2)
-            await message.delete()
-    # If not, check if reply
-    else:
-        reply = message.reply_to_message
-        # Check whether the command is a reply to another message or not
-        if (reply):
-            # If yes, get reply user
-            user = await client.get_users(reply.from_user.id)
-            await message.edit_text(f"@{reply.from_user.username} ➛ {user.id}")
-        # If not, checks chat_type
+        # If not, check if the message is a reply to another message
         else:
-            chat_type = message.chat.type
-            # Check whether the command was sent in a private chat or not
-            if ((chat_type == enums.ChatType.PRIVATE) | (chat_type == enums.ChatType.BOT)):
-                # If yes, send the userbot id
-                user = await client.get_users("me")
-                await message.edit_text(f"@{user.username} ➛ {user.id}")
+            reply = message.reply_to_message
+            # Check whether the message is a reply to another message or not
+            if (reply):
+                # If yes, the script will get chat info based on the user who sent the original message
+                chat = reply.from_user
             else:
-                # If not, send the chat id
-                chat_id = message.chat.id
-                await message.edit_text(f"{chat_id.title} ➛ {chat_id}")
+                # If not, the script will get chat info based on the chat id
+                chat = message.chat
+
+        # If chat_to_get is not None, get chat info based on the arg
+        if (chat_to_get):
+            chat = await client.get_chat(chat_to_get)
+
+        # Edit message
+        await message.edit_text(f"{chat.id}")
+
+    # Exception: the provided arg is invalid
+    except (PeerIdInvalid, UsernameNotOccupied):
+        # Edit message
+        await message.edit_text(ARG_INVALID)
+        # Wait for x seconds
+        await asyncio.sleep(2)
+        # Delete message
+        await message.delete()
