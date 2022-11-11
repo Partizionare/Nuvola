@@ -7,15 +7,16 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 
-# Add HELP to commands list
+# Add Helpto commands list
 Nuvola.update_commands(nuvola, "HELP", {
     'name': 'help',
     'usage': '.help',
-    'description': 'This command will show you all commands available',
+    'description': 'returns all the available commands.',
     'category': 'Utilities'
 })
 
 
+# Help command
 @Nuvola.on_message(filters.me & filters.command("help", PREFIX))
 async def help_cmd(_, message: Message):
     # Initialize help_message string
@@ -29,6 +30,7 @@ async def help_cmd(_, message: Message):
     }
     # Get all commands from commands list
     commands = Nuvola.get_commands(nuvola)
+    # Iterate through all the available commands
     for command in commands:
         n += 1 if n != 3 else -2
         # Concatenate all commands to help_message in a readable way

@@ -13,7 +13,7 @@ import asyncio
 Nuvola.update_commands(nuvola, "ID", {
     'name': 'id',
     'usage': '.id opt(&ltusername&gt)',
-    'description': 'This command will get ids of users and chats.',
+    'description': 'returns a user or a chat\'s id.',
     'category': 'Utilities'
 })
 

@@ -5,9 +5,18 @@ from ..__main__ import nuvola
 from pyrogram import filters, enums
 from pyrogram.types import Message
 from pyrogram.errors import UsernameNotOccupied, PeerIdInvalid
-from ..Utils.globals import PREFIX
+from ..Utils.globals import *
 import os
 import asyncio
+
+
+# Add Profile commands list
+Nuvola.update_commands(nuvola, "PROFILE",  {
+    'name': 'profile',
+    'usage': '.profile opt(&ltusername|id&gt)',
+    'description': 'returns a user or a chat\'s profile.',
+    'category': 'Utilities'
+})
 
 
 # Compose profile info string
@@ -23,6 +32,7 @@ def compose_profile(info: tuple):
     return text
 
 
+# Profile command
 @Nuvola.on_message(filters.me & filters.command("profile", PREFIX))
 async def profile_cmd(client: Nuvola, message: Message):
     try:
@@ -41,16 +51,16 @@ async def profile_cmd(client: Nuvola, message: Message):
                 # If not, the script will get chat info based on the chat id
                 chat_to_get = message.chat.id
 
-        # Get chat info based on
+        # Get chat info
         chat = await client.get_chat(chat_to_get)
 
         '''
         Declaring chat_info (List of tuple).
         each row of this tuple corresponds to a possible row in the final message
-        see the tuple as a sort of formatted string, the second element must be a variable,
+        consider the tuple as a sort of formatted string, the second element must be a variable,
         that variable will be checked by compose_profile() function,
         if the variable is None the row won't be added to the final message.
-        check compose_profile() if you don't understand what's going on
+        check compose_profile() if you don't understand
         '''
         chat_info = [
             ("", chat.bio if chat.type ==
@@ -76,7 +86,7 @@ async def profile_cmd(client: Nuvola, message: Message):
 
     # Exception: the provided arg is invalid
     except (PeerIdInvalid, UsernameNotOccupied):
-        await message.edit_text("The provided arg is in invalid.")
+        await message.edit_text(ARG_INVALID)
         await asyncio.sleep(2)
 
     # Delete the message
