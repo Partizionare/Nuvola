@@ -18,9 +18,8 @@ Nuvola.update_commands(nuvola, "GOOGLE", {
     'category': 'Utilities'
 })
 
+
 # Google command
-
-
 @Nuvola.on_message(filters.me & filters.command("google", PREFIX))
 async def google_cmd(client: Nuvola, message: Message):
     # Edit message

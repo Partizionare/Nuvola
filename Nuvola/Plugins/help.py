@@ -7,7 +7,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 
-# Add Helpto commands list
+# Add Help to commands list
 Nuvola.update_commands(nuvola, "HELP", {
     'name': 'help',
     'usage': '.help',
