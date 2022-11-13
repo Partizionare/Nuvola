@@ -11,11 +11,12 @@ import re
 import asyncio
 from datetime import datetime
 
-# Add ID to commands list
+
+# Add Unzip to commands list
 Nuvola.update_commands(nuvola, "UNZIP", {
     'name': 'unzip',
-    'usage': '.unzip',
-    'description': 'This command will unzip a rar or zip file.',
+    'usage': '.unzip (reply)',
+    'description': 'extract all files from the reply file.',
     'category': 'Utilities'
 })
 
