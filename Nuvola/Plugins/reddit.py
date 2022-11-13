@@ -12,12 +12,18 @@ import asyncio
 # Add Reddit to commands list
 Nuvola.update_commands(nuvola, "REDDIT", {
     'name': 'reddit',
-    'usage': ".reddit &lt-m&gt, &lt-w&gt, &lt-c (channel_name)&gt",
-    'description': 'This command will send a random post from a subreddit you type.',
-    'category': 'Fun'
+    'usage': [
+        (".reddit &lt-m&gt", "sends a random meme"),
+        (".reddit &lt-w&gt", "sends a random wallpaper"),
+        (".reddit &lt-c&gt &ltsubreddit&gt",
+         "sends a random post from the provided subreddit")
+    ],
+    'description': 'gets a random post from a given subreddit.',
+    'category': 'fun'
 })
 
 
+# Reddit command
 @Nuvola.on_message(filters.me & filters.command("reddit", PREFIX))
 async def reddit(client: Nuvola, message: Message):
     # List of args, 'arg' : 'reddit_name'

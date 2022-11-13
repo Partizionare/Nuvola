@@ -13,9 +13,14 @@ import asyncio
 # Add Profile commands list
 Nuvola.update_commands(nuvola, "PROFILE",  {
     'name': 'profile',
-    'usage': '.profile opt(&ltusername|id&gt)',
+    'usage': [
+        (".profile (public chat)", "gets all infos about the current chat."),
+        (".profile (private chat)", "gets all infos about the user you are talking to."),
+        (".profile (reply)", "gets all infos about the reply user."),
+        (".profile &ltusername|id&gt", "gets all infos about the user/chat.")
+    ],
     'description': 'returns a user or a chat\'s profile.',
-    'category': 'Utilities'
+    'category': 'utilities'
 })
 
 

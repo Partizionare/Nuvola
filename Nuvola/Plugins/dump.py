@@ -9,6 +9,18 @@ import asyncio
 import os
 
 
+# Add Reddit to commands list
+Nuvola.update_commands(nuvola, "DUMP", {
+    'name': 'dump',
+    'usage': [
+        (".dump (public chat)", "dumps the current chat."),
+        (".dump &ltusername|id&gt", "dumps the provided chat."),
+    ],
+    'description': 'gathers informations about the members in a chat.',
+    'category': 'utilities'
+})
+
+
 # Function: dump all chat members to a file
 async def dump_to_file(client: Nuvola, chat: int | str, filename: str):
     # Declaring file_path

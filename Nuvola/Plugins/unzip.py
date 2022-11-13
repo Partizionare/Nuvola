@@ -15,12 +15,15 @@ from datetime import datetime
 # Add Unzip to commands list
 Nuvola.update_commands(nuvola, "UNZIP", {
     'name': 'unzip',
-    'usage': '.unzip (reply)',
-    'description': 'extract all files from the reply file.',
-    'category': 'Utilities'
+    'usage': [
+        (".unzip (reply)", "unzips the reply file.")
+    ],
+    'description': 'extracts all files from the reply file.',
+    'category': 'utilities'
 })
 
 
+# Unzip command
 @Nuvola.on_message(filters.me & filters.command("unzip", PREFIX))
 async def unzip_cmd(_, message: Message):
     # Reply

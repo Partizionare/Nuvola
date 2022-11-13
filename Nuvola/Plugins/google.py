@@ -13,26 +13,30 @@ import re
 # Add Google to commands list
 Nuvola.update_commands(nuvola, "GOOGLE", {
     'name': 'google',
-    'usage': '.google opt(&ltlang=locale&gt) &ltquery&gt',
-    'description': 'does a google search based on the arguments provided.',
-    'category': 'Utilities'
+    'usage': [
+        (".google opt&ltlocale&gt &ltquery&gt",
+         "searches on google based on the provided locale.")
+    ],
+    'description': 'searches on google according to the provided arguments.',
+    'category': 'utilities'
 })
 
 
 # Google command
 @Nuvola.on_message(filters.me & filters.command("google", PREFIX))
-async def google_cmd(client: Nuvola, message: Message):
+async def google_cmd(_, message: Message):
     # Edit message
     await message.edit_text("Searching...")
     # Default params declaration
     lang, country = "en", "uk"
     query = '+'.join(message.command[1:])
-    # Overwrite params if the arg 'lang=' is provided
-    regex = re.match("^lang=[a-zA-Z]{2}.[a-zA-Z]{2}", message.command[1])
-    if (regex):
-        args = re.split("[\W_]", regex.group(0).lstrip("lang="))
-        lang, country = args
-        query = "+".join(message.command[2:])
+    # Overwrite params if the locale arg is provided
+    if (len(message.command) > 2):
+        locale_arg = re.match("^[a-zA-Z]{2}.[a-zA-Z]{2}", message.command[1])
+        if (locale_arg):
+            args = re.split("[\W_]", locale_arg.group(0))
+            lang, country = args
+            query = "+".join(message.command[2:])
     # Cookie to bypass google.com consent pop-up
     cookies = {'CONSENT': 'YES+cb.20221118-17-p0.en+FX+917'}
     # Params for the search

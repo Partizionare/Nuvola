@@ -7,12 +7,15 @@ from ..__init__ import __version__
 from pyrogram import filters
 from pyrogram.types import Message
 
+
 # Add INFO to commands list
 Nuvola.update_commands(nuvola, "INFO", {
     'name': 'info',
-    'usage': '.info',
-    'description': 'This command will show info about Nuvola.',
-    'category': 'Utilities'
+    'usage': [
+        (".info", "shows infos about Nuvola")
+    ],
+    'description': 'returns infos about Nuvola.',
+    'category': 'utilities'
 })
 
 

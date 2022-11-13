@@ -8,6 +8,17 @@ from pyrogram.types import Message
 from os import path
 import json
 
+
+# Add MUTE to commands list
+Nuvola.update_commands(nuvola, "MUTE", {
+    'name': 'mute',
+    'usage': [
+        (".mute (private chat)", "mutes the user you are talking to.")
+    ],
+    'description': 'deletes all messages sent by an user in DM.',
+    'category': 'utilities'
+})
+
 # Path to Nuvola/Utils/Json/plugins.json
 path_to_file = f"{path.dirname(path.dirname(__file__))}/Utils/Json/plugins.json"
 
@@ -18,15 +29,8 @@ with open(path_to_file, "r") as file:
 # List where the bots stores ids of muted user
 muted_list = json_data["mute"]["muted"]
 
-# Add MUTE to commands list
-Nuvola.update_commands(nuvola, "MUTE", {
-    'name': 'mute',
-    'usage': '.mute',
-    'description': 'This command will mute the user (private chat).',
-    'category': 'Utilities'
-})
 
-
+# Mute command
 @Nuvola.on_message(filters.me & filters.private & filters.command("mute", PREFIX))
 async def mute_cmd(_, message: Message):
     # Get user
@@ -45,12 +49,15 @@ async def mute_cmd(_, message: Message):
 # Add UNMUTE to commands list
 Nuvola.update_commands(nuvola, "UNMUTE", {
     'name': 'unmute',
-    'usage': '.unmute',
-    'description': 'This command will unmute the user (private chat).',
-    'category': 'Utilities'
+    'usage': [
+        (".unmute (private chat)", "unmutes the user you are talking to.")
+    ],
+    'description': 're-allows an user to send messages in DM.',
+    'category': 'utilities'
 })
 
 
+# Unmute command
 @Nuvola.on_message(filters.me & filters.private & filters.command("unmute", PREFIX))
 async def unmute_cmd(_, message: Message):
     # Get user

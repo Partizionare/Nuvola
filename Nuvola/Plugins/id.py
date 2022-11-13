@@ -12,9 +12,14 @@ import asyncio
 # Add Id to commands list
 Nuvola.update_commands(nuvola, "ID", {
     'name': 'id',
-    'usage': '.id opt(&ltusername&gt)',
+    'usage': [
+        (".id (public chat)", "gets the id of the current chat."),
+        (".id (private chat)", "gets the id of the user you are talking to."),
+        (".id (reply)", "gets the id of the reply user."),
+        (".id &ltusername&gt", "gets the id of the user/chat."),
+    ],
     'description': 'returns a user or a chat\'s id.',
-    'category': 'Utilities'
+    'category': 'utilities'
 })
 
 
