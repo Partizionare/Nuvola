@@ -1,0 +1,6 @@
+pyrogram
+tgcrypto
+patool
+pyunpack
+bs4
+requests
