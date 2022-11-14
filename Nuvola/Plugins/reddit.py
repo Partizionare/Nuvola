@@ -32,7 +32,7 @@ async def reddit(client: Nuvola, message: Message):
         '-w': 'wallpaper',
     }
     # Initialize reddit variable, it contains the reddit name in which the script will search for random posts
-    reddit = None
+    reddit, error_message = None, None
     # If not, check whether a single argument is provided or not
     if (len(message.command) == 2):
         # If yes, set variable 'reddit' value based on the arg provided
@@ -40,9 +40,9 @@ async def reddit(client: Nuvola, message: Message):
     # Check whether multiple arguments are provided or not
     elif (len(message.command) == 3):
         # If yes, check wheter the first argument is '-c' or not
-        if (message.command[2] == "-c"):
+        if (message.command[1] == "-c"):
             # If yes, set variable 'reddit' value based on the arg provided by the user via command
-            reddit = message.command[3]
+            reddit = message.command[2]
 
     # Check whether the reddit variable contains reddit name or not
     if (reddit):
