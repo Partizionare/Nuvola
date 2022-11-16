@@ -31,10 +31,10 @@ async def help_cmd(_, message: Message):
         help_message = f"<b>☁️ Nuvola v{__version__}</b>\n"
         if (len(message.command) == 2):
             command = commands[message.command[1].upper()]
-            help_message += f"\n📚 Command\n» .{command['name']}\n\n💠 Category\n» {command['category']}\n\n🔎 Usage\n"
+            help_message += f"\n📚 <b>Command</b>\n» .{command['name']}\n\n💠 <b>Category</b>\n» {command['category']}\n\n🔎 <b>Usage</b>\n"
             for usage in command['usage']:
                 help_message += f"» {usage[0]}\n- {usage[1]}\n"
-            help_message += f"\nℹ️ Description\n» {command['description']}"
+            help_message += f"\nℹ️ <b>Description</b>\n» {command['description']}"
         else:
             # Initialize help_message string
             help_message += f"» To get detailed infos about a specific command, use .help &ltcmd_name&gt\n\n🔑 <b>Prefixes</b>\n» | "

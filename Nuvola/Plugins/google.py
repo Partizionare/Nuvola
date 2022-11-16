@@ -14,8 +14,10 @@ import re
 Nuvola.update_commands(nuvola, "GOOGLE", {
     'name': 'google',
     'usage': [
-        (".google opt&ltlocale&gt &ltquery&gt",
-         "searches on google based on the provided locale.")
+        (".google &ltquery&gt",
+         "searches on google with default country."),
+        (".google opt&lt-country&gt &ltquery&gt",
+         "searches on google based on the provided country.")
     ],
     'description': 'searches on google according to the provided arguments.',
     'category': 'utilities'
@@ -28,22 +30,20 @@ async def google_cmd(_, message: Message):
     # Edit message
     await message.edit_text("Searching...")
     # Default params declaration
-    lang, country = "en", "uk"
+    country = "us"
     query = '+'.join(message.command[1:])
     # Overwrite params if the locale arg is provided
     if (len(message.command) > 2):
-        locale_arg = re.match("^[a-zA-Z]{2}.[a-zA-Z]{2}", message.command[1])
-        if (locale_arg):
-            args = re.split("[\W_]", locale_arg.group(0))
-            lang, country = args
+        arg = re.match("[-][a-zA-Z]{1,3}", message.command[1])
+        if (arg):
+            country = message.command[1].lstrip("-")
             query = "+".join(message.command[2:])
+
     # Cookie to bypass google.com consent pop-up
     cookies = {'CONSENT': 'YES+cb.20221118-17-p0.en+FX+917'}
     # Params for the search
     params = {
         'q': query,
-        'lr': lang,
-        'hl': lang,
         'gl': country
     }
     # Get search engine page using requests
@@ -51,8 +51,8 @@ async def google_cmd(_, message: Message):
                            params=params, cookies=cookies)
     # Soup
     soup = BeautifulSoup(request.content, features="html.parser")
-    # Initializing text and counter
-    text, counter = "⛅️ Google search\n\n", 0
+    # Initializing text, tmp counter
+    text, tmp, counter = "<b>☁️ Nuvola's Google search</b>\n", "", 0
     # Iter through all link in the page
     for link in soup.find_all('a'):
         # Get href attribute from 'a'element
@@ -66,7 +66,11 @@ async def google_cmd(_, message: Message):
                 # Increase counter
                 counter += 1
                 # Add the formatted element scraped from the search engine
-                text += f"» <a href='{href.lstrip('/url?q=').split('&sa=U')[0]}'>{title[0].getText()}</a>\n"
+                tmp += f"» <a href='{href.lstrip('/url?q=').split('&sa=U')[0]}'>{title[0].getText()}</a>\n"
 
+    if (counter == 0):
+        text += "\n» No results found."
+    else:
+        text += f"» query: {query}\n» country: {country.lower()}\n» elements: {counter}\n\n🔎 <b>Results</b>\n{tmp}"
     # Edit message
     await message.edit_text(text, disable_web_page_preview=True)

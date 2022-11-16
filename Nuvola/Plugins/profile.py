@@ -70,10 +70,10 @@ async def profile_cmd(client: Nuvola, message: Message):
         chat_info = [
             ("", chat.bio if chat.type ==
              enums.ChatType.PRIVATE else chat.description),
-            ("∙ ID » ", chat.id),
-            ("∙ Username » @", chat.username),
-            ("∙ Name » ", chat.first_name) if chat.type == enums.ChatType.PRIVATE else (
-                "∙ Title » ", chat.title)
+            ("• ID » ", chat.id),
+            ("• Username » @", chat.username),
+            ("• Name » ", chat.first_name) if chat.type == enums.ChatType.PRIVATE else (
+                "• Title » ", chat.title)
         ]
 
         # Compose the final message based on chat_info tuple

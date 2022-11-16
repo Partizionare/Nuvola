@@ -72,7 +72,7 @@ async def unzip_cmd(_, message: Message):
                 continue
         # Benchmark end
         end = datetime.now()
-        await message.reply(f"☁️ <b>Nuvola Unzipper</b>\n∙ Time » {(end-start).total_seconds():.2f}s\n∙ Files extracted » {counter}", quote=False)
+        await message.reply(f"☁️ <b>Nuvola's Unzipper</b>\n∙ Time » {(end-start).total_seconds():.2f}s\n∙ Files extracted » {counter}", quote=False)
         # Remove all extracted files
         shutil.rmtree(folder)
     # The file format is not supported

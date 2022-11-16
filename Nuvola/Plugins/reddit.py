@@ -7,7 +7,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 import requests
 import asyncio
-
+import random
 
 # Add Reddit to commands list
 Nuvola.update_commands(nuvola, "REDDIT", {
@@ -25,11 +25,11 @@ Nuvola.update_commands(nuvola, "REDDIT", {
 
 # Reddit command
 @Nuvola.on_message(filters.me & filters.command("reddit", PREFIX))
-async def reddit(client: Nuvola, message: Message):
+async def reddit(_, message: Message):
     # List of args, 'arg' : 'reddit_name'
     args = {
-        '-m': 'memes',
-        '-w': 'wallpaper',
+        '-m': random.choice(['memes', 'dankmemes']),
+        '-w': random.choice(['wallpaper', 'wallpapers'])
     }
     # Initialize reddit variable, it contains the reddit name in which the script will search for random posts
     reddit, error_message = None, None
@@ -56,7 +56,7 @@ async def reddit(client: Nuvola, message: Message):
             # post_info contains all post informations
             post_info = reddit_request.json()
             # Send the post fetched by the script
-            await message.reply_photo(post_info.get('url'), caption=f"⛅️ Provided by Nuvola from <a href='{post_info['postLink']}'>Reddit</a>", quote=False)
+            await message.reply_photo(post_info['url'], caption=f"☁️ Provided by Nuvola from <a href='{post_info['postLink']}'>Reddit</a>", quote=False)
             # Delete message
             await message.delete()
         # Exception: the reddit doesn't exists
@@ -64,7 +64,7 @@ async def reddit(client: Nuvola, message: Message):
             error_message = await message.edit_text("⚠️ This reddit doesn't exists.")
         # Exception: general problems
         except Exception:
-            error_message = await message.edit_text("⚠️ An error has occured while getting the post.")
+            error_message = await message.edit_text(f"⚠️ An error has occured while getting the post")
     # If not, there is a syntax error in the command
     else:
         error_message = await message.edit_text(ARG_SYNTAX)

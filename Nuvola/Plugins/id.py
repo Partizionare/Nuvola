@@ -3,7 +3,7 @@ from ..nuvola import Nuvola
 # Nuvola instance
 from ..__main__ import nuvola
 from ..Utils.globals import *
-from pyrogram import filters
+from pyrogram import filters, enums
 from pyrogram.types import Message
 from pyrogram.errors import UsernameNotOccupied, PeerIdInvalid
 import asyncio
@@ -49,7 +49,7 @@ async def id_cmd(client: Nuvola, message: Message):
             chat = await client.get_chat(chat_to_get)
 
         # Edit message
-        await message.edit_text(f"{chat.id}")
+        await message.edit_text(f"{chat.first_name if chat.type == enums.ChatType.PRIVATE else chat.title} » <code>{chat.id}</code>")
 
     # Exception: the provided arg is invalid
     except (PeerIdInvalid, UsernameNotOccupied):
