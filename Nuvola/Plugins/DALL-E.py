@@ -24,14 +24,14 @@ Nuvola.update_commands(nuvola, "OPENAI", {
 
 @Nuvola.on_message(filters.me & filters.command("openai", PREFIX))
 async def dalle(client, message):
-    #detect if the phrase is present
+    #Detect if the phrase is present
     if (len(message.command) >= 2):
         x = await message.edit_text("__Generating photo from DALL-E...__")
 
         #Stating the phrase
         phrase = " ".join(message.command[1:])
 
-        #creatting the image
+        #Creating the image
         response = openai.Image.create(prompt = f"{phrase}", n=1, size = "1024x1024")
 
         #url of image
@@ -41,7 +41,7 @@ async def dalle(client, message):
         #Sending the image
         await client.send_photo(message.chat.id, image_url, caption = f"⛅️ Provided by Nuvola from <a href='https://openai.com/dall-e-2/'>DALL-E</a>\n\n❝{phrase}❞")
     
-    #if there is not any phrase
+    #If there is not any phrase
     else:
         await message.edit_text(f"⚠️ Please type a phrase.")
         await asyncio.sleep(2)
