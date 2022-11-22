@@ -5,4 +5,3 @@ pyunpack
 bs4
 requests
 deep_translator
-openai
