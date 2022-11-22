@@ -47,7 +47,7 @@ async def google_cmd(_, message: Message):
         'gl': country
     }
     # Get search engine page using requests
-    request = requests.get(f"https://google.com/search",
+    request = requests.get("https://google.com/search",
                            params=params, cookies=cookies)
     # Soup
     soup = BeautifulSoup(request.content, features="html.parser")

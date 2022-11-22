@@ -5,7 +5,7 @@ from ..__main__ import nuvola
 from pyrogram import filters, enums
 from pyrogram.types import Message
 from pyrogram.errors import UsernameNotOccupied, PeerIdInvalid
-from ..Utils.globals import *
+from ..Utils.globals import PREFIX, ARG_INVALID
 import os
 import asyncio
 

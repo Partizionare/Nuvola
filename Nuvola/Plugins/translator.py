@@ -2,7 +2,7 @@
 from ..nuvola import Nuvola
 # Nuvola instance
 from ..__main__ import nuvola
-from ..Utils.globals import *
+from ..Utils.globals import PREFIX, ARG_SYNTAX
 from pyrogram import filters
 from pyrogram.types import Message
 import asyncio

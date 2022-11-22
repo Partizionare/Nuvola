@@ -4,7 +4,7 @@ from ..nuvola import Nuvola
 from ..__main__ import nuvola
 from pyrogram import filters, enums
 from pyrogram.types import Message
-from ..Utils.globals import *
+from ..Utils.globals import PREFIX, ARG_MISSING
 import asyncio
 import os
 

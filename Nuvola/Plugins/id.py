@@ -2,7 +2,7 @@
 from ..nuvola import Nuvola
 # Nuvola instance
 from ..__main__ import nuvola
-from ..Utils.globals import *
+from ..Utils.globals import PREFIX, ARG_INVALID
 from pyrogram import filters, enums
 from pyrogram.types import Message
 from pyrogram.errors import UsernameNotOccupied, PeerIdInvalid

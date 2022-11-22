@@ -3,7 +3,7 @@ from ..nuvola import Nuvola
 # Nuvola istance
 from ..__main__ import nuvola
 from ..__init__ import __version__
-from ..Utils.globals import *
+from ..Utils.globals import PREFIX, ARG_INVALID
 from pyrogram import filters
 from pyrogram.types import Message
 import asyncio
@@ -37,7 +37,7 @@ async def help_cmd(_, message: Message):
             help_message += f"\nℹ️ <b>Description</b>\n» {command['description']}"
         else:
             # Initialize help_message string
-            help_message += f"» To get detailed infos about a specific command, use .help &ltcmd_name&gt\n\n🔑 <b>Prefixes</b>\n» | "
+            help_message += "» To get detailed infos about a specific command, use .help &ltcmd_name&gt\n\n🔑 <b>Prefixes</b>\n» | "
             for prefix in PREFIX:
                 help_message += f"{prefix} | "
             help_message += "\n\n📒 <b>Commands list:</b>\n"

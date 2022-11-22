@@ -7,10 +7,8 @@ import os
 # Nuvola class
 class Nuvola(Client):
     def __init__(self):
-        # Get current dir
-        dir = os.path.dirname(__file__)
         # Plugins folder
-        plugins = dict(root=f"Nuvola/Plugins")
+        plugins = dict(root="Nuvola/Plugins")
         # Pyrogram client init
         super().__init__(
             name="Nuvola",

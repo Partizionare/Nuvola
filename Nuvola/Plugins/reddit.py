@@ -2,7 +2,7 @@
 from ..nuvola import Nuvola
 # Nuvola istance
 from ..__main__ import nuvola
-from ..Utils.globals import *
+from ..Utils.globals import PREFIX, ARG_SYNTAX
 from pyrogram import filters
 from pyrogram.types import Message
 import requests
@@ -64,7 +64,7 @@ async def reddit(_, message: Message):
             error_message = await message.edit_text("⚠️ This reddit doesn't exists.")
         # Exception: general problems
         except Exception:
-            error_message = await message.edit_text(f"⚠️ An error has occured while getting the post")
+            error_message = await message.edit_text("⚠️ An error has occured while getting the post")
     # If not, there is a syntax error in the command
     else:
         error_message = await message.edit_text(ARG_SYNTAX)
