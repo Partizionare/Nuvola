@@ -59,14 +59,14 @@ async def profile_cmd(client: Nuvola, message: Message):
         # Get chat info
         chat = await client.get_chat(chat_to_get)
 
-        '''
+        """
         Declaring chat_info (List of tuple).
         each row of this tuple corresponds to a possible row in the final message
         consider the tuple as a sort of formatted string, the second element must be a variable,
         that variable will be checked by compose_profile() function,
         if the variable is None the row won't be added to the final message.
         check compose_profile() if you don't understand
-        '''
+        """
         chat_info = [
             ("", chat.bio if chat.type ==
              enums.ChatType.PRIVATE else chat.description),

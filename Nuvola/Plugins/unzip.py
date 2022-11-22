@@ -58,9 +58,9 @@ async def unzip_cmd(_, message: Message):
         # Initialize unzipped_files, this list will contain all abs path to all extracted files
         unzipped_files = []
         # Iterate through ALL files in folder, and add the absolute path of them to unzipped_files
-        for dir, _, files in os.walk(folder):
+        for directory, _, files in os.walk(folder):
             for name in files:
-                unzipped_files.append(os.path.join(dir, name))
+                unzipped_files.append(os.path.join(directory, name))
         # Number of files sent via telegram, != len(unzipped_files) because file with size == 0 can't be sent
         counter = 0
         # Loop through all unzipped files and send them via telegram

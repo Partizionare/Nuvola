@@ -1,7 +1,6 @@
 from pyrogram import Client
 from . import __version__
 from .Utils.config import API_ID, API_HASH
-import os
 
 
 # Nuvola class

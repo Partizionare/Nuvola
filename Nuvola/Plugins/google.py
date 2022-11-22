@@ -58,7 +58,7 @@ async def google_cmd(_, message: Message):
         # Get href attribute from 'a'element
         href = link['href']
         # Filters
-        if "url?q=" in href and not "webcache" in href:
+        if "url?q=" in href and "webcache" not in href:
             # Get heading of links
             title = link.find_all("h3")
             # Filters
