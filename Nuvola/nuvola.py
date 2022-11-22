@@ -17,7 +17,6 @@ class Nuvola(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             app_version="Nuvola",
-            workdir=f"{dir}/Sessions",
             plugins=plugins
         )
 
