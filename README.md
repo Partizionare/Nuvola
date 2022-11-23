@@ -9,16 +9,30 @@ Nuvola is a powerful telegram userbot built on pyrogram
 
 ## 📦 Installation
 1 - Clone Nuvola's Github repository<br>
-`$ git clone https://github.com/Partizionare/Nuvola.git`
+```
+$ git clone https://github.com/Partizionare/Nuvola.git
+```
 
 2 - Cd into Nuvola<br>
-`$ cd Nuvola`
-
+```
+$ cd Nuvola
+```
 3 - Install all required libraries, listed in requirements.txt<br>
-`$ pip3 install -r requirements.txt`
+```
+$ pip3 install -r requirements.txt
+```
 
-4 - Start Nuvola<br>
-`$ python3 -m Nuvola`
+4 - Configure API_ID and API_HASH, located in Nuvola/Utils/config.py<br>
+```python
+# Telegram authentication stuff, get it from https://my.telegram.org/apps
+API_ID = 12345
+API_HASH = "abcdef12345"
+```
+
+5 - Start Nuvola<br>
+```
+$ python3 -m Nuvola
+```
 
 ## ❤️ Credits
 [Pyrogram](https://pyrogram.org/) - [Dan](https://github.com/delivrance)
