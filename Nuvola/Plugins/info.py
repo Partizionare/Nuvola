@@ -17,7 +17,7 @@ Nuvola.update_commands(nuvola, "INFO", {
     'category': 'utilities'
 })
 
-# some infos about the bot
+#Some infos about Nuvola
 @Nuvola.on_message(filters.me & filters.command("info", PREFIX))
 async def info(client: Nuvola, message: Message):
     await message.delete()
