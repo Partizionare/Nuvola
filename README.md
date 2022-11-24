@@ -35,4 +35,5 @@ $ python3 -m Nuvola
 ```
 
 ## ❤️ Credits
-[Pyrogram](https://pyrogram.org/) - [Dan](https://github.com/delivrance)
+[Dan](https://github.com/delivrance) - [Pyrogram](https://pyrogram.org/)<br>
+[Titidrawz](https://twitter.com/titidrawz) - Nuvola's logo
